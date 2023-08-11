@@ -16,7 +16,7 @@ import com.storeOperation.userregistration.entity.Store;
 import com.storeOperation.userregistration.service.AuthService;
 
 @RestController
-@RequestMapping("/api/store")
+@RequestMapping("/api/auth")
 public class StoreController {
 	
 	@Autowired
