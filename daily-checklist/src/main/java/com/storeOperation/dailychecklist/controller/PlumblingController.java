@@ -40,8 +40,8 @@ public class PlumblingController {
 		return new ResponseEntity<>(savedChecklist,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getBydateTaskPlumbling/{date}")
-	public ResponseEntity<List<TaskPlumblingChecklist>> getTaskPlumbling(@PathVariable("date") String date){
+	@GetMapping("/getBydateTaskPlumbling/{date}/{storeName}")
+	public ResponseEntity<List<TaskPlumblingChecklist>> getTaskPlumbling(@PathVariable("date") String date,@PathVariable("storeName") String storeName){
 		List<TaskPlumblingChecklist> savedChecklist = plumblingservice.getbyDateTaskPlumbling(date);
 		return new ResponseEntity<>(savedChecklist,HttpStatus.OK);
 	}
