@@ -137,6 +137,16 @@ public class AuthServiceImpl implements AuthService {
 				Store updateStore = storeRepository.save(existingStore);
 				return updateStore;
 	}
+
+
+	@Override
+	public Optional<User> userDetails(String name) {
+		Optional<User> user = userRepository.findByUsername(name);
+		if(user == null) {
+			new UserExceptionHandler(HttpStatus.BAD_REQUEST, "User not exist!");
+		}
+		return user;
+	}
 }
 
 
