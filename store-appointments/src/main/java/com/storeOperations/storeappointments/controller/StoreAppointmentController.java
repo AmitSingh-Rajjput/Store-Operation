@@ -36,9 +36,9 @@ public class StoreAppointmentController {
 		return new ResponseEntity<>(savedapp,HttpStatus.OK);
 	}
 	
-	@GetMapping("/showAppointmentStore/{storeName}")
-	public ResponseEntity<List<Appointment>> showAppointmentStore(@PathVariable("storeName") String storeName){
-		List<Appointment> savedapp = storeAppointment.showStoreAppointment(storeName);
+	@GetMapping("/showAppointmentStore/{storeName}/{date}")
+	public ResponseEntity<List<Appointment>> showAppointmentStore(@PathVariable("storeName") String storeName,@PathVariable("date") String date){
+		List<Appointment> savedapp = storeAppointment.showStoreAppointment(storeName,date);
 		return new ResponseEntity<>(savedapp,HttpStatus.OK);
 	}
 

@@ -38,10 +38,7 @@ public class StoreappointmentServiceImpl implements StoreAppointementService {
 		
 		appointmentRepo.save(appointmentNew);
 		
-		//List<Participants> listParticipants = new ArrayList<Participants>();
-		
 		for(int i=0;i< appdto.getParticipants().size();i++) {
-			//listParticipants.add(appdto.getParticipants().get(i));
 			participantRepo.save(new Participants(appdto.getParticipants().get(i).getName(),appdto.getParticipants().get(i).getEmailId(), appointmentNew));
 		}
 		
@@ -65,9 +62,9 @@ public class StoreappointmentServiceImpl implements StoreAppointementService {
 	}
 
 	@Override
-	public List<Appointment> showStoreAppointment(String storeName) {
+	public List<Appointment> showStoreAppointment(String storeName,String date) {
 		
-		List<Appointment> listStore = appointmentRepo.findByStoreName(storeName);
+		List<Appointment> listStore = appointmentRepo.findByStoreNameAndDate(storeName,date);
 		
 		if(listStore.size() == 0) {
 			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "No appointment is found!");

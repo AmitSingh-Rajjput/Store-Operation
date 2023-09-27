@@ -13,6 +13,6 @@ public interface StoreAppointementService {
 	
 	AppointentDto viewAppointment(Long id);
 	
-	List<Appointment> showStoreAppointment(String storeName);
+	List<Appointment> showStoreAppointment(String storeName,String date);
 
 }

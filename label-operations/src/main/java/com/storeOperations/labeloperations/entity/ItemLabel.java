@@ -84,6 +84,16 @@ public class ItemLabel {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public ItemLabel(String itemLabelName, String itemCode, String itemLabelImg, SelfLabel selfLabel) {
+		super();
+		this.itemLabelName = itemLabelName;
+		this.itemCode = itemCode;
+		this.itemLabelImg = itemLabelImg;
+		this.selfLabel = selfLabel;
+	}
+	
+	
 	
 	
 

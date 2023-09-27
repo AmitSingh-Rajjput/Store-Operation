@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 	
-	List<Appointment> findByStoreName(String storeName);
+	List<Appointment> findByStoreNameAndDate(String storeName,String date);
 
 }
