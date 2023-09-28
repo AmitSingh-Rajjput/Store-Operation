@@ -9,4 +9,5 @@ import java.util.List;
 public interface SelfLabelRepository extends JpaRepository<SelfLabel, Long>{
 
 	SelfLabel findBySelfLabelIdAndStoreName(String selfLabelId, String storeName);
+	List<SelfLabel> findByStoreName(String storeName);
 }

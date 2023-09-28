@@ -11,5 +11,6 @@ import java.util.List;
 public interface ItemLabelRepository extends JpaRepository<ItemLabel, Long> {
 	
 	List<ItemLabel> findBySelfLabel(SelfLabel selfLabel);
+	ItemLabel findByItemCode(String itemCode);
 
 }

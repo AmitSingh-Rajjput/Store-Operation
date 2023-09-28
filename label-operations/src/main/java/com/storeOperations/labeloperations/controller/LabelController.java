@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.storeOperations.labeloperations.entity.ChangeRequest;
 import com.storeOperations.labeloperations.entity.LabelDto;
+import com.storeOperations.labeloperations.entity.ReplenishmentDto;
+import com.storeOperations.labeloperations.entity.SelfLabel;
 import com.storeOperations.labeloperations.service.Labelservice;
 import com.storeOperations.labeloperations.service.impl.LabelServiceImpl;
 
@@ -34,6 +37,31 @@ public class LabelController {
 	public ResponseEntity<LabelDto> showLabel(@PathVariable("selfLabelId") String selfLabelId,@PathVariable("store") String store){
 		LabelDto self = labelService.viewItemInSelf(selfLabelId,store);
 		return new ResponseEntity<>(self,HttpStatus.OK);
+	}
+	
+
+	@PostMapping("/addQtyForReplenishment")
+	public ResponseEntity<String> addQtyGapscanning(@RequestBody ReplenishmentDto replenishmentDto){
+		String savedapp = labelService.replenishmentOrder(replenishmentDto);
+		return new ResponseEntity<>(savedapp,HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/showLabels/{store}")
+	public ResponseEntity<List<SelfLabel>> showLabels(@PathVariable("store") String store){
+		List<SelfLabel> shelf = labelService.selfLabel(store);
+		return new ResponseEntity<>(shelf,HttpStatus.OK);
+	}
+	
+	@PostMapping("/addChangeRequest")
+	public ResponseEntity<String> addChangeRequest(@RequestBody ChangeRequest changeReq){
+		String savedapp = labelService.addChangeRequest(changeReq);
+		return new ResponseEntity<>(savedapp,HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/showAllChangeRequest/{store}")
+	public ResponseEntity<List<ChangeRequest>> showCahngeRequest(@PathVariable("store") String store){
+		List<ChangeRequest> changeReq = labelService.allChangeRequest(store);
+		return new ResponseEntity<>(changeReq,HttpStatus.OK);
 	}
 	
 	

@@ -23,6 +23,8 @@ public class SelfLabel {
 	private String storeName;
 	
 	private Long maxItem;
+	
+	private Long maxQtyForSingleProduct;
 
 	public Long getId() {
 		return id;
@@ -86,6 +88,26 @@ public class SelfLabel {
 		this.selfLabelImg = selfLabelImg;
 		this.storeName = storeName;
 		this.maxItem = maxItem;
+	}
+
+	public SelfLabel(Long id, String selfLabelName, String selfLabelId, String selfLabelImg, String storeName,
+			Long maxItem, Long maxQtyForSingleProduct) {
+		super();
+		this.id = id;
+		this.selfLabelName = selfLabelName;
+		this.selfLabelId = selfLabelId;
+		this.selfLabelImg = selfLabelImg;
+		this.storeName = storeName;
+		this.maxItem = maxItem;
+		this.maxQtyForSingleProduct = maxQtyForSingleProduct;
+	}
+
+	public Long getMaxQtyForSingleProduct() {
+		return maxQtyForSingleProduct;
+	}
+
+	public void setMaxQtyForSingleProduct(Long maxQtyForSingleProduct) {
+		this.maxQtyForSingleProduct = maxQtyForSingleProduct;
 	}
 	
 	
