@@ -94,7 +94,7 @@ public class LabelServiceImpl implements Labelservice {
 
 		for(int i =0;i<replenishment.getListItem().size();i++) {
 			
-			replenishmentRepo.save(new Replenishment(replenishment.getListItem().get(i).getItemCode(),replenishment.getListItem().get(i).getCurrentQty(),replenishment.getListItem().get(i).getMaxQuantity(),replenishment.getListItem().get(i).getQtyReplenished(),
+			replenishmentRepo.save(new Replenishment(replenishment.getListItem().get(i).getItemCode(),replenishment.getListItem().get(i).getCurrentQty(),label.getMaxQtyForSingleProduct(),replenishment.getListItem().get(i).getQtyReplenished(),
 					replenishment.getListItem().get(i).getDate(),label));
 			
 		}
