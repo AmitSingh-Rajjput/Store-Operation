@@ -51,6 +51,13 @@ public class BankDepositController {
 	}
 	
 	
+	@GetMapping("/bankDeposits/{date}")
+	public ResponseEntity<BankDeposits> seeBankDeposits(@PathVariable String date){
+		BankDeposits bankDeposit = bankDepositService.viewBankDeposit(date);
+		return new ResponseEntity<>(bankDeposit,HttpStatus.OK);
+	}
+	
+	
 	
 	
 

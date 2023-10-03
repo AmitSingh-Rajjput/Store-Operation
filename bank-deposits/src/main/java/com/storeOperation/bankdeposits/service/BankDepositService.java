@@ -11,6 +11,7 @@ public interface BankDepositService {
 	String addBankDeposit(BankDeposits bankDeposit);
 	String addBankDetailsDeposite(String date,String storeName,BankDepositsDetails bankdepositDetails);
 	BankDepositView viewDetail(String date);
+	BankDeposits viewBankDeposit(String date);
 	List<BankDeposits> viewAllBankDeposits(String storeName);
 
 }

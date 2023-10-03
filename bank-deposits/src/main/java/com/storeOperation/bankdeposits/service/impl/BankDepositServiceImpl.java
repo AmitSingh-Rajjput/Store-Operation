@@ -68,4 +68,13 @@ public class BankDepositServiceImpl implements BankDepositService {
 		return bankDepositRepo.findByStoreName(storeName);
 	}
 
+	@Override
+	public BankDeposits viewBankDeposit(String date) {
+		BankDeposits savedDeposit = bankDepositRepo.findByDate(date);
+		if(savedDeposit == null) {
+			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "Request not exist!!");
+		}
+		return savedDeposit;
+	}
+
 }
