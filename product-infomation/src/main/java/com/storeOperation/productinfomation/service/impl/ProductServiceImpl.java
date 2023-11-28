@@ -10,8 +10,15 @@ import com.storeOperation.productinfomation.exception.UserExceptionHandler;
 import com.storeOperation.productinfomation.Entity.Product;
 import com.storeOperation.productinfomation.Entity.ProductDetails;
 import com.storeOperation.productinfomation.Entity.ProductDisplayInfoDto;
+import com.storeOperation.productinfomation.Entity.ProductDisplayPromotion;
+import com.storeOperation.productinfomation.Entity.PromotionAddDto;
+import com.storeOperation.productinfomation.Entity.PromotionDetailInfo;
+import com.storeOperation.productinfomation.Entity.PromotionItemList;
+import com.storeOperation.productinfomation.Entity.PromotionList;
 import com.storeOperation.productinfomation.repository.ProductDetailsRepository;
 import com.storeOperation.productinfomation.repository.ProductRepository;
+import com.storeOperation.productinfomation.repository.PromotionItemListRepository;
+import com.storeOperation.productinfomation.repository.PromotionListRepository;
 import com.storeOperation.productinfomation.service.ProductService;
 
 @Service
@@ -22,6 +29,12 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private ProductDetailsRepository productDetailsRepo;
+	
+	@Autowired
+	private PromotionListRepository promoListRepo;
+	
+	@Autowired
+	private PromotionItemListRepository promoItemListRepo;
 	
 
 	@Override
@@ -93,5 +106,80 @@ public class ProductServiceImpl implements ProductService {
 		
 		return similarCategory;
 	}
+
+	@Override
+	public String addPromotion(PromotionList promoList) {
+		PromotionList newPromo = promoListRepo.findByPromotionId(promoList.getPromotionId());
+		if(newPromo != null) {
+			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "Promotion already exist!");
+		}
+		PromotionList promo = promoListRepo.save(promoList);
+		return "Add promotion sucessfully!";
+	}
+
+	@Override
+	public String addPromotionItemList(List<PromotionAddDto> promotionItem) {
+		for(int i=0;i< promotionItem.size();i++) {
+			Product findProduct = productRepo.findByProductSku(promotionItem.get(i).getProductItemNo());
+			if(findProduct == null) {
+				throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "Product is not found!");
+			}
+			PromotionList promotion = promoListRepo.findByPromotionId(promotionItem.get(i).getPromotionId());
+			if(promotion == null) {
+				throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "Promotion is not found!");
+			}
+			promoItemListRepo.save(new PromotionItemList(findProduct, promotion,promotionItem.get(i).getProductPromoPrice()));
+		}
+		
+		return "Added promotion to item sucessfully!";
+	}
+
+	@Override
+	public List<PromotionList> listAllPromotions() {
+		
+		List<PromotionList> listAllPromo = promoListRepo.findAll();
+		if(listAllPromo.size()==0) {
+			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "Promotion list is empty");
+		}
+		return listAllPromo;
+	}
+
+	@Override
+	public PromotionDetailInfo promoDetail(String promoId) {
+		System.out.println("Promo Id"+ promoId);
+		PromotionList promo = promoListRepo.findByPromotionId("ABS12");
+		System.out.println(promo.getPromotionDescription());
+		if(promo == null){
+			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "Promotion is not found!");
+		}
+		
+		List<PromotionItemList> promoList = promoItemListRepo.findByPromotionList(promo);
+		System.out.println(promoList.size());
+		
+		PromotionDetailInfo detail = new PromotionDetailInfo();
+		
+		detail.setPromoDetails(promo);
+		detail.setPromoItemList(promoList);
+		return detail;
+		
+	}
+
+	@Override
+	public ProductDisplayPromotion promoDetailsOnProduct(String productSku) {
+		
+		Product prod = productRepo.findByProductSku(productSku);
+		if(prod == null){
+			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "Product is not found!");
+		}
+		
+		List<PromotionItemList> promoId = promoItemListRepo.findByProduct(prod);
+		
+		ProductDisplayPromotion display = new ProductDisplayPromotion();
+		display.setProduct(prod);
+		display.setPromoItemList(promoId);
+		
+		return display;
+	}
+
 
 }

@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.storeOperation.productinfomation.Entity.Product;
 import com.storeOperation.productinfomation.Entity.ProductDetails;
 import com.storeOperation.productinfomation.Entity.ProductDisplayInfoDto;
+import com.storeOperation.productinfomation.Entity.ProductDisplayPromotion;
+import com.storeOperation.productinfomation.Entity.PromotionAddDto;
+import com.storeOperation.productinfomation.Entity.PromotionDetailInfo;
+import com.storeOperation.productinfomation.Entity.PromotionList;
 import com.storeOperation.productinfomation.service.ProductService;
 
 @RestController
@@ -56,9 +60,34 @@ public class ProductController {
 	}
 	
 	
+	@PostMapping("/addPromotion")
+	public ResponseEntity<String> addPromotions(@RequestBody PromotionList promoList){
+		String savedCheckList = productService.addPromotion(promoList);
+		return new ResponseEntity<>(savedCheckList,HttpStatus.CREATED);
+	}
 	
+	@PostMapping("/addPromotiontoItem")
+	public ResponseEntity<String> addPromotionsToItem(@RequestBody List<PromotionAddDto> promotionItem){
+		String savedCheckList = productService.addPromotionItemList(promotionItem);
+		return new ResponseEntity<>(savedCheckList,HttpStatus.CREATED);
+	}
 	
+	@GetMapping("/promoList")
+	public ResponseEntity<List<PromotionList>> promoList(){
+		List<PromotionList> promoList = productService.listAllPromotions();
+		return new ResponseEntity<>(promoList,HttpStatus.CREATED);
+	}
 	
+	@GetMapping("/promoListDetail/{promoId}")
+	public ResponseEntity<PromotionDetailInfo> promoDetail(@PathVariable("promoId") String promoId){
+		PromotionDetailInfo promoList = productService.promoDetail(promoId);
+		return new ResponseEntity<>(promoList,HttpStatus.OK);
+	}
 	
+	@GetMapping("/promoItemDetail/{sku}")
+	public ResponseEntity<ProductDisplayPromotion> promoItemDetail(@PathVariable("sku") String sku){
+		ProductDisplayPromotion promoList = productService.promoDetailsOnProduct(sku);
+		return new ResponseEntity<>(promoList,HttpStatus.OK);
+	}
 
 }
