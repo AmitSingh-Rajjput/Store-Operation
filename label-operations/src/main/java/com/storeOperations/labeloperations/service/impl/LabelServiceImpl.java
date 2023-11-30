@@ -165,7 +165,6 @@ public class LabelServiceImpl implements Labelservice {
 		if(itemInfo.size() == 0) {
 			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "No Request found!");
 		}
-		
 		return itemInfo;
 	}
 	
