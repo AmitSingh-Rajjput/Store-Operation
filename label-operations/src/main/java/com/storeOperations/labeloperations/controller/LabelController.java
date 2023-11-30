@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.storeOperations.labeloperations.entity.ChangeRequest;
 import com.storeOperations.labeloperations.entity.LabelDto;
+import com.storeOperations.labeloperations.entity.PriceChangeLabel;
 import com.storeOperations.labeloperations.entity.ReplenishmentDto;
+import com.storeOperations.labeloperations.entity.SearchLabelDto;
 import com.storeOperations.labeloperations.entity.SelfLabel;
 import com.storeOperations.labeloperations.service.Labelservice;
 import com.storeOperations.labeloperations.service.impl.LabelServiceImpl;
@@ -65,5 +67,16 @@ public class LabelController {
 	}
 	
 	
-
+	@GetMapping("/showLableInfo/{id}/{store}")
+	public ResponseEntity<SearchLabelDto> SerachLabel(@PathVariable("id") String id,  @PathVariable("store") String store){
+		SearchLabelDto info = labelService.lableInfo(id, store);
+		return new ResponseEntity<>(info,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/priceChangeLabel/{date}/{store}")
+	public ResponseEntity<List<PriceChangeLabel>> labelPriceChange(@PathVariable("date") String date,  @PathVariable("store") String store){
+		List<PriceChangeLabel> lableInfo = labelService.detailLabel(date,store);
+		return new ResponseEntity<>(lableInfo,HttpStatus.OK);
+	}
 }

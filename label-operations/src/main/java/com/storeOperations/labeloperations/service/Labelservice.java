@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.storeOperations.labeloperations.entity.ChangeRequest;
 import com.storeOperations.labeloperations.entity.LabelDto;
+import com.storeOperations.labeloperations.entity.PriceChangeLabel;
 import com.storeOperations.labeloperations.entity.ReplenishmentDto;
+import com.storeOperations.labeloperations.entity.SearchLabelDto;
 import com.storeOperations.labeloperations.entity.SelfLabel;
 
 public interface Labelservice {
@@ -20,4 +22,8 @@ public interface Labelservice {
 	String addChangeRequest(ChangeRequest changeReq);
 	
 	List<ChangeRequest> allChangeRequest(String storeName);
+	
+	SearchLabelDto lableInfo(String id,String storeName);
+	
+	List<PriceChangeLabel> detailLabel(String date,String storeName);
 }

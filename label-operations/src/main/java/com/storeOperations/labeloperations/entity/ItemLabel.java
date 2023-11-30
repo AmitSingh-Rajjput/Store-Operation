@@ -26,6 +26,8 @@ public class ItemLabel {
 	
 	private String itemLabelImg;
 	
+	private String itemUpdateOfferImg;
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "self_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -91,6 +93,25 @@ public class ItemLabel {
 		this.itemCode = itemCode;
 		this.itemLabelImg = itemLabelImg;
 		this.selfLabel = selfLabel;
+	}
+
+	public ItemLabel(Long id, String itemLabelName, String itemCode, String itemLabelImg, String itemUpdateOfferImg,
+			SelfLabel selfLabel) {
+		super();
+		this.id = id;
+		this.itemLabelName = itemLabelName;
+		this.itemCode = itemCode;
+		this.itemLabelImg = itemLabelImg;
+		this.itemUpdateOfferImg = itemUpdateOfferImg;
+		this.selfLabel = selfLabel;
+	}
+
+	public String getItemUpdateOfferImg() {
+		return itemUpdateOfferImg;
+	}
+
+	public void setItemUpdateOfferImg(String itemUpdateOfferImg) {
+		this.itemUpdateOfferImg = itemUpdateOfferImg;
 	}
 	
 	

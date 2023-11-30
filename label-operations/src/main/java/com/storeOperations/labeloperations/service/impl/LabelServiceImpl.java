@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 import com.storeOperations.labeloperations.entity.ChangeRequest;
 import com.storeOperations.labeloperations.entity.ItemLabel;
 import com.storeOperations.labeloperations.entity.LabelDto;
+import com.storeOperations.labeloperations.entity.PriceChangeLabel;
 import com.storeOperations.labeloperations.entity.Replenishment;
 import com.storeOperations.labeloperations.entity.ReplenishmentDto;
+import com.storeOperations.labeloperations.entity.SearchLabelDto;
 import com.storeOperations.labeloperations.entity.SelfLabel;
 import com.storeOperations.labeloperations.exception.UserExceptionHandler;
 import com.storeOperations.labeloperations.repository.ChangeRequestRepository;
 import com.storeOperations.labeloperations.repository.ItemLabelRepository;
+import com.storeOperations.labeloperations.repository.PriceChangeLabelRepository;
 import com.storeOperations.labeloperations.repository.ReplenishmentRepository;
 import com.storeOperations.labeloperations.repository.SelfLabelRepository;
 import com.storeOperations.labeloperations.service.Labelservice;
@@ -33,6 +36,9 @@ public class LabelServiceImpl implements Labelservice {
 	
 	@Autowired
 	private ChangeRequestRepository changeRepo;
+	
+	@Autowired
+	private PriceChangeLabelRepository changePriceLabelRepo;
 
 	@Override
 	public String addLabelandProduct(LabelDto labeldto) {
@@ -129,6 +135,38 @@ public class LabelServiceImpl implements Labelservice {
 		}
 		
 		return allRequest;
+	}
+
+	@Override
+	public SearchLabelDto lableInfo(String id, String storeName) {
+		SelfLabel shelf = selfLabelrepo.findBySelfLabelIdAndStoreName(id, storeName);
+		ItemLabel iteminfo =   itemLabelrepo.findByItemCode(id);
+		SearchLabelDto info = new SearchLabelDto();
+		if(shelf != null) {
+			List<ItemLabel> itemLabelInfo = itemLabelrepo.findBySelfLabel(shelf);
+			info.setItemInfo(null);
+			info.setShelfInfo(shelf);
+			info.setItemInfoList(itemLabelInfo);
+			return info;	
+		}
+		else if(iteminfo == null) {
+			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "No Request found!");
+		}
+		info.setItemInfo(iteminfo);
+		info.setItemInfoList(null);
+		info.setShelfInfo(null);
+		return info;
+	}
+
+	@Override
+	public List<PriceChangeLabel> detailLabel(String date, String storeName) {
+		// TODO Auto-generated method stub
+		List<PriceChangeLabel> itemInfo = changePriceLabelRepo.findByDate(date);
+		if(itemInfo.size() == 0) {
+			throw new UserExceptionHandler(HttpStatus.BAD_REQUEST, "No Request found!");
+		}
+		
+		return itemInfo;
 	}
 	
 	
